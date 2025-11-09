@@ -1,5 +1,5 @@
 """Mock data for NASDAQ tech stocks"""
-from models import Stock
+from src.models import Stock
 from datetime import datetime
 
 # Mock NASDAQ tech stocks with realistic valuations

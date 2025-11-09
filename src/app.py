@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from data import get_all_stocks, get_stock_by_ticker, get_sectors, filter_stocks
+from src.data import get_all_stocks, get_stock_by_ticker, get_sectors, filter_stocks
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend communication
