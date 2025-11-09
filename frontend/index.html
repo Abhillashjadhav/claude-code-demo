@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASDAQ Tech Screener - Daily Valuations</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <h1 class="logo">
+                        <span class="logo-icon">📈</span>
+                        NASDAQ Tech Screener
+                    </h1>
+                    <div class="header-actions">
+                        <button id="themeToggle" class="btn-icon" title="Toggle Dark Mode">
+                            <span class="theme-icon">🌙</span>
+                        </button>
+                        <button id="watchlistBtn" class="btn-secondary">
+                            Watchlist (<span id="watchlistCount">0</span>)
+                        </button>
+                    </div>
+                </div>
+                <p class="tagline">Track undervalued NASDAQ tech stocks, daily.</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Stats Dashboard -->
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Stocks</div>
+                        <div class="stat-value" id="totalStocks">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Avg P/E Ratio</div>
+                        <div class="stat-value" id="avgPE">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Avg Sentiment</div>
+                        <div class="stat-value" id="avgSentiment">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Positive Outlook</div>
+                        <div class="stat-value" id="positiveGuidance">-</div>
+                    </div>
+                </div>
+
+                <!-- Screener Section -->
+                <div class="screener-layout">
+                    <!-- Filters Sidebar -->
+                    <aside class="filters-sidebar">
+                        <div class="filters-header">
+                            <h2>Filters</h2>
+                            <button id="resetFilters" class="btn-text">Reset All</button>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">Market Cap (B)</label>
+                            <div class="input-row">
+                                <input type="number" id="minMarketCap" placeholder="Min" class="filter-input" step="10">
+                                <span class="input-separator">-</span>
+                                <input type="number" id="maxMarketCap" placeholder="Max" class="filter-input" step="10">
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">P/E Ratio</label>
+                            <div class="input-row">
+                                <input type="number" id="minPE" placeholder="Min" class="filter-input" step="5">
+                                <span class="input-separator">-</span>
+                                <input type="number" id="maxPE" placeholder="Max" class="filter-input" step="5">
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">P/S Ratio</label>
+                            <div class="input-row">
+                                <input type="number" id="minPS" placeholder="Min" class="filter-input" step="1">
+                                <span class="input-separator">-</span>
+                                <input type="number" id="maxPS" placeholder="Max" class="filter-input" step="1">
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">Min Revenue Growth (%)</label>
+                            <input type="number" id="minRevGrowth" placeholder="e.g., 10" class="filter-input" step="5">
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">Min Sentiment Score</label>
+                            <input type="number" id="minSentiment" placeholder="0.0 to 1.0" class="filter-input" min="-1" max="1" step="0.1">
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">Sectors</label>
+                            <div id="sectorFilters" class="checkbox-group"></div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">Management Guidance</label>
+                            <select id="guidanceFilter" class="filter-select">
+                                <option value="">All</option>
+                                <option value="positive">Positive</option>
+                                <option value="neutral">Neutral</option>
+                                <option value="negative">Negative</option>
+                            </select>
+                        </div>
+
+                        <button id="applyFilters" class="btn-primary btn-full">Apply Filters</button>
+                    </aside>
+
+                    <!-- Results Table -->
+                    <div class="results-section">
+                        <div class="results-header">
+                            <h2>Results (<span id="resultCount">0</span>)</h2>
+                            <button id="exportCSV" class="btn-secondary">Export CSV</button>
+                        </div>
+
+                        <div class="table-container">
+                            <table class="stocks-table" id="stocksTable">
+                                <thead>
+                                    <tr>
+                                        <th>Ticker</th>
+                                        <th>Company</th>
+                                        <th>Sector</th>
+                                        <th>Price</th>
+                                        <th>Market Cap</th>
+                                        <th>P/E</th>
+                                        <th>P/S</th>
+                                        <th>Rev Growth</th>
+                                        <th>Sentiment</th>
+                                        <th>Guidance</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stocksTableBody">
+                                    <tr>
+                                        <td colspan="11" class="loading">Loading stocks...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Stock Detail Modal -->
+        <div id="stockModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Stock Details</h2>
+                    <button class="modal-close" id="closeModal">&times;</button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Stock details will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Watchlist Modal -->
+        <div id="watchlistModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>My Watchlist</h2>
+                    <button class="modal-close" id="closeWatchlist">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="watchlistContent">
+                        <!-- Watchlist items will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
