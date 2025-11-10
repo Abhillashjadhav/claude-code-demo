@@ -1,9 +1,9 @@
 # Project Dependencies
 # Add your Python package dependencies here
 
-# Example dependencies:
-# flask
-# pytest
-# requests
+# Flask web framework
+flask==3.0.0
 
-# The project is currently empty - add dependencies as you build features!
+# Testing
+pytest==7.4.3
+pytest-cov==4.1.0
