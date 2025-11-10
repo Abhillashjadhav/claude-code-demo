@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>NASDAQ Tech Screener</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>NASDAQ Tech Valuation Screener</h1>
+    <p class="sub">Filter by valuation & sentiment. Click a row for details.</p>
+  </header>
+
+  <section class="card">
+    <form id="filters">
+      <label>P/E max <input id="pe_max" type="number" step="0.1" placeholder="e.g. 25" /></label>
+      <label>P/S max <input id="ps_max" type="number" step="0.1" placeholder="e.g. 8" /></label>
+      <label>Sentiment min <input id="sentiment_min" type="number" step="0.01" placeholder="0.6" /></label>
+      <button type="submit">Run Screener</button>
+      <button type="button" id="reset">Reset</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="table-wrap">
+      <table id="results">
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Name</th>
+            <th>P/E</th>
+            <th>P/S</th>
+            <th>Sentiment</th>
+          </tr>
+        </thead>
+        <tbody><!-- filled by JS --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" id="detail" hidden>
+    <h2 id="d_title">Details</h2>
+    <pre id="d_json" class="code"></pre>
+  </section>
+
+  <footer>
+    <a href="/health" target="_blank">/health</a>
+  </footer>
+
+  <script>
+    const form = document.getElementById('filters');
+    const resetBtn = document.getElementById('reset');
+    const tbody = document.querySelector('#results tbody');
+    const detail = document.getElementById('detail');
+    const dTitle = document.getElementById('d_title');
+    const dJson = document.getElementById('d_json');
+
+    async function fetchScreener(params) {
+      const qs = new URLSearchParams(params);
+      const res = await fetch(`/screener?${qs.toString()}`);
+      if (!res.ok) throw new Error(`Screener error ${res.status}`);
+      return res.json();
+    }
+
+    async function fetchStock(ticker) {
+      const res = await fetch(`/stocks/${encodeURIComponent(ticker)}`);
+      if (!res.ok) throw new Error(`Stock ${ticker} not found`);
+      return res.json();
+    }
+
+    function renderRows(rows) {
+      tbody.innerHTML = '';
+      if (!rows || rows.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="muted">No results.</td></tr>`;
+        return;
+      }
+      for (const r of rows) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td data-key="ticker">${r.ticker ?? ''}</td>
+          <td>${r.name ?? ''}</td>
+          <td>${r.pe ?? ''}</td>
+          <td>${r.ps ?? ''}</td>
+          <td>${r.sentiment ?? ''}</td>
+        `;
+        tr.addEventListener('click', async () => {
+          try {
+            const t = tr.querySelector('[data-key="ticker"]').textContent.trim();
+            const data = await fetchStock(t);
+            dTitle.textContent = `Details — ${t}`;
+            dJson.textContent = JSON.stringify(data, null, 2);
+            detail.hidden = false;
+            window.scrollTo({ top: detail.offsetTop - 10, behavior: 'smooth' });
+          } catch (e) {
+            alert(e.message);
+          }
+        });
+        tbody.appendChild(tr);
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const params = {};
+      const pe = document.getElementById('pe_max').value;
+      const ps = document.getElementById('ps_max').value;
+      const s  = document.getElementById('sentiment_min').value;
+      if (pe) params.pe_max = pe;
+      if (ps) params.ps_max = ps;
+      if (s)  params.sentiment_min = s;
+      try {
+        const data = await fetchScreener(params);
+        renderRows(data);
+      } catch (e) {
+        alert(e.message);
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      document.getElementById('pe_max').value = '';
+      document.getElementById('ps_max').value = '';
+      document.getElementById('sentiment_min').value = '';
+      tbody.innerHTML = '';
+      detail.hidden = true;
+    });
+
+    // auto-run with no filters on load:
+    (async () => {
+      try {
+        const data = await fetchScreener({});
+        renderRows(data);
+      } catch {}
+    })();
+  </script>
+</body>
+</html>

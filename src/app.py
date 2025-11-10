@@ -1,12 +1,12 @@
 """
 Flask application for NASDAQ tech valuation screener.
 """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from typing import Dict, Any
 from src import data
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 # Load stock data on startup
 try:
@@ -14,6 +14,17 @@ try:
 except Exception as e:
     print(f"Error loading stock data: {e}")
     STOCKS = []
+
+
+@app.route('/')
+def home():
+    """
+    Home page with interactive screener UI.
+
+    Returns:
+        HTML page.
+    """
+    return render_template('index.html')
 
 
 @app.route('/health', methods=['GET'])
