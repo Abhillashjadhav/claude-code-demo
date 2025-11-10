@@ -1,2 +1,9 @@
-flask
-pytest
+# Project Dependencies
+# Add your Python package dependencies here
+
+# Example dependencies:
+# flask
+# pytest
+# requests
+
+# The project is currently empty - add dependencies as you build features!
