@@ -1,125 +1,129 @@
-"""
-Flask application for NASDAQ tech valuation screener.
-"""
 from flask import Flask, jsonify, request, render_template
-from typing import Dict, Any
-from src import data
+import csv
+import os
+from functools import lru_cache
 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.normpath(os.path.join(APP_ROOT, "..", "data"))
+CSV_ALL = os.path.join(DATA_DIR, "all_nasdaq.csv")
+CSV_SAMPLE = os.path.join(DATA_DIR, "sample_stocks.csv")
 
-app = Flask(__name__, template_folder='templates', static_folder='static')
+app = Flask(__name__, template_folder="templates", static_folder="static")
 
-# Load stock data on startup
-try:
-    STOCKS = data.load_stocks()
-except Exception as e:
-    print(f"Error loading stock data: {e}")
-    STOCKS = []
+# --------------------- Data loading ---------------------
 
-
-@app.route('/')
-def home():
-    """
-    Home page with interactive screener UI.
-
-    Returns:
-        HTML page.
-    """
-    return render_template('index.html')
-
-
-@app.route('/health', methods=['GET'])
-def health() -> Dict[str, str]:
-    """
-    Health check endpoint.
-
-    Returns:
-        JSON response with status.
-    """
-    return jsonify({'status': 'ok'})
-
-
-@app.route('/screener', methods=['GET'])
-def screener() -> Any:
-    """
-    Screener endpoint with optional filters.
-
-    Query Parameters:
-        pe_max (float): Maximum P/E ratio
-        ps_max (float): Maximum P/S ratio
-        sentiment_min (float): Minimum sentiment score
-
-    Returns:
-        JSON array of filtered stocks or error message.
-    """
-    # Parse query parameters
-    pe_max = request.args.get('pe_max')
-    ps_max = request.args.get('ps_max')
-    sentiment_min = request.args.get('sentiment_min')
-
-    # Validate and convert parameters
+def _to_float(v):
     try:
-        pe_max_val = None
-        if pe_max is not None:
-            pe_max_val = float(pe_max)
-            if pe_max_val <= 0:
-                return jsonify({'error': 'pe_max must be positive'}), 400
+        return float(v)
+    except Exception:
+        return None
 
-        ps_max_val = None
-        if ps_max is not None:
-            ps_max_val = float(ps_max)
-            if ps_max_val <= 0:
-                return jsonify({'error': 'ps_max must be positive'}), 400
+def _csv_path():
+    return CSV_ALL if os.path.exists(CSV_ALL) else CSV_SAMPLE
 
-        sentiment_min_val = None
-        if sentiment_min is not None:
-            sentiment_min_val = float(sentiment_min)
-            if sentiment_min_val < 0 or sentiment_min_val > 100:
-                return jsonify({'error': 'sentiment_min must be between 0 and 100'}), 400
+@lru_cache(maxsize=1)
+def _load_rows_cached(csv_path):
+    rows = []
+    if not os.path.exists(csv_path):
+        return rows
+    with open(csv_path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for r in reader:
+            rows.append({
+                "ticker": (r.get("ticker") or "").strip(),
+                "name": r.get("name"),
+                "pe": _to_float(r.get("pe")),
+                "ps": _to_float(r.get("ps")),
+                "sentiment": _to_float(r.get("sentiment")),
+                "lastUpdated": r.get("lastUpdated") or None,
+            })
+    return rows
 
-    except ValueError as e:
-        return jsonify({'error': f'Invalid parameter format: {str(e)}'}), 400
+def load_rows():
+    return _load_rows_cached(_csv_path())
 
-    # Filter stocks
-    filtered_stocks = data.filter_stocks(
-        STOCKS,
-        pe_max=pe_max_val,
-        ps_max=ps_max_val,
-        sentiment_min=sentiment_min_val
-    )
+def reload_data():
+    _load_rows_cached.cache_clear()  # invalidate
+    # prime cache
+    _ = load_rows()
 
-    return jsonify(filtered_stocks)
+# --------------------- UI ---------------------
 
+@app.route("/")
+def home():
+    return render_template("index.html")
 
-@app.route('/stocks/<ticker>', methods=['GET'])
-def get_stock(ticker: str) -> Any:
-    """
-    Get a single stock by ticker.
+# --------------------- API ---------------------
 
-    Args:
-        ticker: Stock ticker symbol.
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"})
 
-    Returns:
-        JSON object of stock or 404 error.
-    """
-    stock = data.get_stock_by_ticker(ticker, STOCKS)
+@app.route("/admin/reload", methods=["POST"])
+def admin_reload():
+    reload_data()
+    return jsonify({"ok": True, "count": len(load_rows())})
 
-    if stock is None:
-        return jsonify({'error': f'Stock not found: {ticker}'}), 404
+@app.route("/screener")
+def screener():
+    rows = load_rows()
 
-    return jsonify(stock)
+    # filters (optional)
+    pe_max = request.args.get("pe_max", type=float)
+    ps_max = request.args.get("ps_max", type=float)
+    sentiment_min = request.args.get("sentiment_min", type=float)
 
+    # sorting
+    sort_by = request.args.get("sort_by", default="ticker")  # ticker|pe|ps|sentiment
+    sort_dir = request.args.get("sort_dir", default="asc")    # asc|desc
 
-@app.errorhandler(404)
-def not_found(error):
-    """Handle 404 errors."""
-    return jsonify({'error': 'Endpoint not found'}), 404
+    # pagination
+    page = request.args.get("page", default=1, type=int)
+    page_size = request.args.get("page_size", default=50, type=int)
+    page = max(1, page)
+    page_size = min(max(1, page_size), 200)  # cap page size
 
+    # filter
+    def keep(r):
+        if pe_max is not None and (r["pe"] is None or r["pe"] > pe_max): return False
+        if ps_max is not None and (r["ps"] is None or r["ps"] > ps_max): return False
+        if sentiment_min is not None and (r["sentiment"] is None or r["sentiment"] < sentiment_min): return False
+        return True
 
-@app.errorhandler(500)
-def internal_error(error):
-    """Handle 500 errors."""
-    return jsonify({'error': 'Internal server error'}), 500
+    filtered = [r for r in rows if keep(r)]
 
+    # sort
+    key_map = {
+        "ticker": lambda x: (x["ticker"] or ""),
+        "pe": lambda x: (x["pe"] is None, x["pe"] or 0.0),
+        "ps": lambda x: (x["ps"] is None, x["ps"] or 0.0),
+        "sentiment": lambda x: (x["sentiment"] is None, x["sentiment"] or 0.0),
+    }
+    key_fn = key_map.get(sort_by, key_map["ticker"])
+    filtered.sort(key=key_fn, reverse=(sort_dir == "desc"))
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # paginate
+    total = len(filtered)
+    start = (page - 1) * page_size
+    end = start + page_size
+    page_items = filtered[start:end]
+    total_pages = (total + page_size - 1) // page_size if page_size else 1
+
+    return jsonify({
+        "items": page_items,
+        "page": page,
+        "page_size": page_size,
+        "total": total,
+        "total_pages": total_pages
+    })
+
+@app.route("/stocks/<ticker>")
+def stock_detail(ticker):
+    rows = load_rows()
+    for r in rows:
+        if r["ticker"] and r["ticker"].upper() == ticker.upper():
+            return jsonify(r)
+    return jsonify({"error": "not_found", "message": f"Ticker {ticker} not found"}), 404
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=8000, debug=True)
