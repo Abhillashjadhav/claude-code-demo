@@ -1,0 +1,602 @@
+[
+  {
+    "mplvid": "MPLV-12345",
+    "mplid": "MPL-100",
+    "name": "Modern Office Chair - Black",
+    "description": "Ergonomic office chair with lumbar support",
+    "featureBullets": ["Adjustable height", "360-degree swivel", "Lumbar support"],
+    "classId": "CLS-500",
+    "className": "Office Chairs",
+    "marketContext": "US",
+    "availableMarkets": ["US", "CA"],
+    "lastUpdated": "2025-11-08T14:30:00Z",
+    "supplierPartId": "SUP-CHAIR-001",
+    "legacyIds": {
+      "sku": "SKU-CHAIR-BLK-001",
+      "optionId": "OPT-12345",
+      "ocid": "OCID-67890"
+    },
+    "selectedChoices": [
+      {"choiceId": "CHOICE-COLOR-BLACK"}
+    ],
+    "statusSummary": "LIVE",
+    "pipelineStatus": {
+      "overallStatus": "COMPLETED",
+      "steps": [
+        {
+          "code": "CONTENT_VALIDATION",
+          "name": "Content Validation",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-08T10:00:00Z",
+          "completedAt": "2025-11-08T10:05:00Z",
+          "message": "All validations passed"
+        },
+        {
+          "code": "IMAGE_MODERATION",
+          "name": "Image Moderation",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-08T10:05:00Z",
+          "completedAt": "2025-11-08T10:10:00Z",
+          "message": "Images approved"
+        },
+        {
+          "code": "PUBLISH",
+          "name": "Publish",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-08T14:25:00Z",
+          "completedAt": "2025-11-08T14:30:00Z",
+          "message": "Product published"
+        }
+      ]
+    },
+    "statusDetails": {
+      "barrierReasons": [],
+      "validationErrors": [],
+      "doubleClassingInfo": null,
+      "missingRecommendedAttributes": []
+    },
+    "variantGroupId": "VG-1001",
+    "variantType": "STANDARD",
+    "optionCategories": ["Color"],
+    "variantAttributes": [
+      {
+        "displayName": "Color",
+        "value": "Black",
+        "rank": 1,
+        "thumbnailUrl": "https://cdn.example.com/thumb-black.jpg"
+      }
+    ],
+    "productType": "SIMPLE",
+    "components": [],
+    "media": {
+      "imagery": [
+        {
+          "url": "https://cdn.example.com/chair-black-1.jpg?signed=abc123",
+          "moderationStatus": "APPROVED",
+          "mediaUrlExpiresAt": "2025-11-10T14:30:00Z"
+        }
+      ],
+      "videos": [],
+      "documents": []
+    }
+  },
+  {
+    "mplvid": "MPLV-12346",
+    "mplid": "MPL-100",
+    "name": "Modern Office Chair - White",
+    "description": "Ergonomic office chair with lumbar support",
+    "featureBullets": ["Adjustable height", "360-degree swivel", "Lumbar support"],
+    "classId": "CLS-500",
+    "className": "Office Chairs",
+    "marketContext": "US",
+    "availableMarkets": ["US", "CA"],
+    "lastUpdated": "2025-11-08T14:35:00Z",
+    "supplierPartId": "SUP-CHAIR-002",
+    "legacyIds": {
+      "sku": "SKU-CHAIR-WHT-002",
+      "optionId": "OPT-12346",
+      "ocid": "OCID-67891"
+    },
+    "selectedChoices": [
+      {"choiceId": "CHOICE-COLOR-WHITE"}
+    ],
+    "statusSummary": "LIVE",
+    "pipelineStatus": {
+      "overallStatus": "COMPLETED",
+      "steps": [
+        {
+          "code": "CONTENT_VALIDATION",
+          "name": "Content Validation",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-08T10:10:00Z",
+          "completedAt": "2025-11-08T10:15:00Z",
+          "message": "All validations passed"
+        },
+        {
+          "code": "IMAGE_MODERATION",
+          "name": "Image Moderation",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-08T10:15:00Z",
+          "completedAt": "2025-11-08T10:20:00Z",
+          "message": "Images approved"
+        },
+        {
+          "code": "PUBLISH",
+          "name": "Publish",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-08T14:30:00Z",
+          "completedAt": "2025-11-08T14:35:00Z",
+          "message": "Product published"
+        }
+      ]
+    },
+    "statusDetails": {
+      "barrierReasons": [],
+      "validationErrors": [],
+      "doubleClassingInfo": null,
+      "missingRecommendedAttributes": []
+    },
+    "variantGroupId": "VG-1001",
+    "variantType": "STANDARD",
+    "optionCategories": ["Color"],
+    "variantAttributes": [
+      {
+        "displayName": "Color",
+        "value": "White",
+        "rank": 2,
+        "thumbnailUrl": "https://cdn.example.com/thumb-white.jpg"
+      }
+    ],
+    "productType": "SIMPLE",
+    "components": [],
+    "media": {
+      "imagery": [
+        {
+          "url": "https://cdn.example.com/chair-white-1.jpg?signed=def456",
+          "moderationStatus": "APPROVED",
+          "mediaUrlExpiresAt": "2025-11-10T14:35:00Z"
+        }
+      ],
+      "videos": [],
+      "documents": []
+    }
+  },
+  {
+    "mplvid": "MPLV-12347",
+    "mplid": "MPL-100",
+    "name": "Modern Office Chair - Gray",
+    "description": "Ergonomic office chair with lumbar support",
+    "featureBullets": ["Adjustable height", "360-degree swivel", "Lumbar support"],
+    "classId": "CLS-500",
+    "className": "Office Chairs",
+    "marketContext": "US",
+    "availableMarkets": ["US", "CA"],
+    "lastUpdated": "2025-11-05T09:00:00Z",
+    "supplierPartId": "SUP-CHAIR-003",
+    "legacyIds": {
+      "sku": "SKU-CHAIR-GRY-003",
+      "optionId": "OPT-12347",
+      "ocid": "OCID-67892"
+    },
+    "selectedChoices": [
+      {"choiceId": "CHOICE-COLOR-GRAY"}
+    ],
+    "statusSummary": "PROCESSING",
+    "pipelineStatus": {
+      "overallStatus": "PROCESSING",
+      "steps": [
+        {
+          "code": "CONTENT_VALIDATION",
+          "name": "Content Validation",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-05T08:00:00Z",
+          "completedAt": "2025-11-05T08:05:00Z",
+          "message": "All validations passed"
+        },
+        {
+          "code": "IMAGE_MODERATION",
+          "name": "Image Moderation",
+          "status": "PROCESSING",
+          "startedAt": "2025-11-05T08:05:00Z",
+          "completedAt": null,
+          "message": "Awaiting moderation review"
+        },
+        {
+          "code": "PUBLISH",
+          "name": "Publish",
+          "status": "PENDING",
+          "startedAt": null,
+          "completedAt": null,
+          "message": null
+        }
+      ]
+    },
+    "statusDetails": {
+      "barrierReasons": [],
+      "validationErrors": [],
+      "doubleClassingInfo": null,
+      "missingRecommendedAttributes": ["dimensions"]
+    },
+    "variantGroupId": "VG-1001",
+    "variantType": "STANDARD",
+    "optionCategories": ["Color"],
+    "variantAttributes": [
+      {
+        "displayName": "Color",
+        "value": "Gray",
+        "rank": 3,
+        "thumbnailUrl": "https://cdn.example.com/thumb-gray.jpg"
+      }
+    ],
+    "productType": "SIMPLE",
+    "components": [],
+    "media": {
+      "imagery": [
+        {
+          "url": "https://cdn.example.com/chair-gray-1.jpg?signed=ghi789",
+          "moderationStatus": "PENDING",
+          "mediaUrlExpiresAt": "2025-11-10T09:00:00Z"
+        }
+      ],
+      "videos": [],
+      "documents": []
+    }
+  },
+  {
+    "mplvid": "MPLV-54321",
+    "mplid": "MPL-200",
+    "name": "Standing Desk - Walnut",
+    "description": "Electric height-adjustable standing desk",
+    "featureBullets": ["Electric motor", "Memory presets", "Walnut finish"],
+    "classId": "CLS-510",
+    "className": "Desks",
+    "marketContext": "US",
+    "availableMarkets": ["US"],
+    "lastUpdated": "2025-11-09T10:15:00Z",
+    "supplierPartId": "SUP-DESK-100",
+    "legacyIds": {
+      "sku": "SKU-DESK-WAL-100",
+      "optionId": "OPT-54321",
+      "ocid": "OCID-98765"
+    },
+    "selectedChoices": [
+      {"choiceId": "CHOICE-FINISH-WALNUT"}
+    ],
+    "statusSummary": "BLOCKED",
+    "pipelineStatus": {
+      "overallStatus": "BLOCKED",
+      "steps": [
+        {
+          "code": "CONTENT_VALIDATION",
+          "name": "Content Validation",
+          "status": "FAILED",
+          "startedAt": "2025-11-09T09:00:00Z",
+          "completedAt": "2025-11-09T09:10:00Z",
+          "message": "Missing required attributes"
+        },
+        {
+          "code": "IMAGE_MODERATION",
+          "name": "Image Moderation",
+          "status": "PENDING",
+          "startedAt": null,
+          "completedAt": null,
+          "message": null
+        },
+        {
+          "code": "PUBLISH",
+          "name": "Publish",
+          "status": "PENDING",
+          "startedAt": null,
+          "completedAt": null,
+          "message": null
+        }
+      ]
+    },
+    "statusDetails": {
+      "barrierReasons": [
+        {
+          "code": "MISSING_REQUIRED_ATTRIBUTE",
+          "message": "Required attribute 'weight_capacity' is missing",
+          "fieldPath": "attributes.weight_capacity",
+          "severity": "ERROR",
+          "actionableSteps": ["Add weight capacity specification"],
+          "remediationUrl": "https://docs.example.com/barriers/missing-required-attribute",
+          "addedBy": "System Validation"
+        }
+      ],
+      "validationErrors": [
+        {
+          "code": "INVALID_DIMENSION",
+          "message": "Height value exceeds maximum allowed",
+          "fieldPath": "attributes.height",
+          "severity": "ERROR"
+        }
+      ],
+      "doubleClassingInfo": null,
+      "missingRecommendedAttributes": ["assembly_time"]
+    },
+    "variantGroupId": "VG-2001",
+    "variantType": "STANDARD",
+    "optionCategories": ["Finish"],
+    "variantAttributes": [
+      {
+        "displayName": "Finish",
+        "value": "Walnut",
+        "rank": 1,
+        "thumbnailUrl": "https://cdn.example.com/thumb-walnut.jpg"
+      }
+    ],
+    "productType": "SIMPLE",
+    "components": [],
+    "media": {
+      "imagery": [
+        {
+          "url": "https://cdn.example.com/desk-walnut-1.jpg?signed=jkl012",
+          "moderationStatus": "APPROVED",
+          "mediaUrlExpiresAt": "2025-11-10T10:15:00Z"
+        }
+      ],
+      "videos": [],
+      "documents": [
+        {
+          "url": "https://cdn.example.com/desk-manual.pdf?signed=mno345",
+          "moderationStatus": "APPROVED",
+          "mediaUrlExpiresAt": "2025-11-10T10:15:00Z"
+        }
+      ]
+    }
+  },
+  {
+    "mplvid": "MPLV-99999",
+    "mplid": "MPL-300",
+    "name": "Home Office Bundle",
+    "description": "Complete home office setup with desk and chair",
+    "featureBullets": ["Desk included", "Chair included", "Cable management"],
+    "classId": "CLS-520",
+    "className": "Office Bundles",
+    "marketContext": "US",
+    "availableMarkets": ["US", "CA"],
+    "lastUpdated": "2025-11-10T08:00:00Z",
+    "supplierPartId": "SUP-KIT-001",
+    "legacyIds": {
+      "sku": "SKU-KIT-OFFICE-001",
+      "optionId": "OPT-99999",
+      "ocid": "OCID-11111"
+    },
+    "selectedChoices": [],
+    "statusSummary": "LIVE",
+    "pipelineStatus": {
+      "overallStatus": "COMPLETED",
+      "steps": [
+        {
+          "code": "CONTENT_VALIDATION",
+          "name": "Content Validation",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-10T07:00:00Z",
+          "completedAt": "2025-11-10T07:05:00Z",
+          "message": "All validations passed"
+        },
+        {
+          "code": "COMPOSITE_VALIDATION",
+          "name": "Composite Validation",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-10T07:05:00Z",
+          "completedAt": "2025-11-10T07:10:00Z",
+          "message": "All components validated"
+        },
+        {
+          "code": "PUBLISH",
+          "name": "Publish",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-10T07:55:00Z",
+          "completedAt": "2025-11-10T08:00:00Z",
+          "message": "Product published"
+        }
+      ]
+    },
+    "statusDetails": {
+      "barrierReasons": [],
+      "validationErrors": [],
+      "doubleClassingInfo": null,
+      "missingRecommendedAttributes": []
+    },
+    "variantGroupId": null,
+    "variantType": null,
+    "optionCategories": [],
+    "variantAttributes": [],
+    "productType": "COMPOSITE",
+    "components": [
+      {
+        "mplvid": "MPLV-54321",
+        "quantity": 1,
+        "relationship": "COMPONENT",
+        "componentType": "DESK",
+        "redacted": false
+      },
+      {
+        "mplvid": "MPLV-12345",
+        "quantity": 1,
+        "relationship": "COMPONENT",
+        "componentType": "CHAIR",
+        "redacted": false
+      }
+    ],
+    "media": {
+      "imagery": [
+        {
+          "url": "https://cdn.example.com/bundle-1.jpg?signed=pqr678",
+          "moderationStatus": "APPROVED",
+          "mediaUrlExpiresAt": "2025-11-11T08:00:00Z"
+        }
+      ],
+      "videos": [],
+      "documents": []
+    }
+  },
+  {
+    "mplvid": "MPLV-77777",
+    "mplid": "MPL-400",
+    "name": "Ergonomic Keyboard",
+    "description": "Wireless ergonomic keyboard",
+    "featureBullets": ["Wireless", "Ergonomic design", "USB-C charging"],
+    "classId": "CLS-600",
+    "className": "Keyboards",
+    "marketContext": "CA",
+    "availableMarkets": ["CA"],
+    "lastUpdated": "2025-10-15T12:00:00Z",
+    "supplierPartId": "SUP-KB-001",
+    "legacyIds": {
+      "sku": "SKU-KB-ERGO-001",
+      "optionId": "OPT-77777",
+      "ocid": "OCID-22222"
+    },
+    "selectedChoices": [],
+    "statusSummary": "LIVE",
+    "pipelineStatus": {
+      "overallStatus": "COMPLETED",
+      "steps": [
+        {
+          "code": "CONTENT_VALIDATION",
+          "name": "Content Validation",
+          "status": "COMPLETED",
+          "startedAt": "2025-10-15T11:00:00Z",
+          "completedAt": "2025-10-15T11:05:00Z",
+          "message": "All validations passed"
+        },
+        {
+          "code": "IMAGE_MODERATION",
+          "name": "Image Moderation",
+          "status": "COMPLETED",
+          "startedAt": "2025-10-15T11:05:00Z",
+          "completedAt": "2025-10-15T11:10:00Z",
+          "message": "Images approved"
+        },
+        {
+          "code": "PUBLISH",
+          "name": "Publish",
+          "status": "COMPLETED",
+          "startedAt": "2025-10-15T11:55:00Z",
+          "completedAt": "2025-10-15T12:00:00Z",
+          "message": "Product published"
+        }
+      ]
+    },
+    "statusDetails": {
+      "barrierReasons": [],
+      "validationErrors": [],
+      "doubleClassingInfo": null,
+      "missingRecommendedAttributes": []
+    },
+    "variantGroupId": null,
+    "variantType": null,
+    "optionCategories": [],
+    "variantAttributes": [],
+    "productType": "SIMPLE",
+    "components": [],
+    "media": {
+      "imagery": [
+        {
+          "url": "https://cdn.example.com/keyboard-1.jpg?signed=stu901",
+          "moderationStatus": "APPROVED",
+          "mediaUrlExpiresAt": "2025-11-12T12:00:00Z"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://cdn.example.com/keyboard-demo.mp4?signed=vwx234",
+          "moderationStatus": "APPROVED",
+          "mediaUrlExpiresAt": "2025-11-12T12:00:00Z"
+        }
+      ],
+      "documents": []
+    }
+  },
+  {
+    "mplvid": "MPLV-88888",
+    "mplid": "MPL-500",
+    "name": "Monitor Stand - Adjustable",
+    "description": "Height-adjustable monitor stand with storage",
+    "featureBullets": ["Height adjustable", "Storage drawer", "Cable management"],
+    "classId": "CLS-700",
+    "className": "Monitor Accessories",
+    "marketContext": "US",
+    "availableMarkets": ["US", "CA"],
+    "lastUpdated": "2025-11-07T16:30:00Z",
+    "supplierPartId": "SUP-STAND-001",
+    "legacyIds": {
+      "sku": "SKU-STAND-ADJ-001",
+      "optionId": "OPT-88888",
+      "ocid": "OCID-33333"
+    },
+    "selectedChoices": [],
+    "statusSummary": "BLOCKED",
+    "pipelineStatus": {
+      "overallStatus": "BLOCKED",
+      "steps": [
+        {
+          "code": "CONTENT_VALIDATION",
+          "name": "Content Validation",
+          "status": "COMPLETED",
+          "startedAt": "2025-11-07T15:00:00Z",
+          "completedAt": "2025-11-07T15:05:00Z",
+          "message": "All validations passed"
+        },
+        {
+          "code": "IMAGE_MODERATION",
+          "name": "Image Moderation",
+          "status": "FAILED",
+          "startedAt": "2025-11-07T15:05:00Z",
+          "completedAt": "2025-11-07T16:30:00Z",
+          "message": "Image quality issues detected"
+        },
+        {
+          "code": "PUBLISH",
+          "name": "Publish",
+          "status": "PENDING",
+          "startedAt": null,
+          "completedAt": null,
+          "message": null
+        }
+      ]
+    },
+    "statusDetails": {
+      "barrierReasons": [
+        {
+          "code": "IMAGE_QUALITY_ISSUE",
+          "message": "Product images do not meet minimum resolution requirements",
+          "fieldPath": "media.imagery[0]",
+          "severity": "ERROR",
+          "actionableSteps": ["Upload images with minimum 1000x1000 resolution"],
+          "remediationUrl": "https://docs.example.com/barriers/image-quality",
+          "addedBy": "Image Moderation"
+        }
+      ],
+      "validationErrors": [],
+      "doubleClassingInfo": {
+        "isDoubleClassed": true,
+        "classIds": ["CLS-700", "CLS-705"],
+        "primaryClassId": "CLS-700",
+        "resolutionStatus": "PENDING_REVIEW",
+        "resolutionNotes": "Product fits multiple categories, awaiting merchandising review"
+      },
+      "missingRecommendedAttributes": []
+    },
+    "variantGroupId": null,
+    "variantType": null,
+    "optionCategories": [],
+    "variantAttributes": [],
+    "productType": "SIMPLE",
+    "components": [],
+    "media": {
+      "imagery": [
+        {
+          "url": "https://cdn.example.com/stand-1.jpg?signed=yza567",
+          "moderationStatus": "REJECTED",
+          "mediaUrlExpiresAt": "2025-11-10T16:30:00Z"
+        }
+      ],
+      "videos": [],
+      "documents": []
+    }
+  }
+]

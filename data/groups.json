@@ -1,0 +1,106 @@
+[
+  {
+    "variantGroupId": "VG-1001",
+    "mplid": "MPL-100",
+    "marketContext": "US",
+    "optionCategories": [
+      {
+        "categoryName": "color",
+        "displayName": "Color",
+        "rank": 1,
+        "description": "Chair color options",
+        "isCustomCategory": false,
+        "moderationStatus": "APPROVED"
+      }
+    ],
+    "variants": [
+      {
+        "mplvid": "MPLV-12345",
+        "name": "Modern Office Chair - Black",
+        "variantType": "STANDARD",
+        "optionValues": [
+          {
+            "categoryName": "color",
+            "value": "Black",
+            "displayName": "Black",
+            "rank": 1
+          }
+        ],
+        "leadImageUrl": "https://cdn.example.com/thumb-black.jpg",
+        "statusSummary": "LIVE"
+      },
+      {
+        "mplvid": "MPLV-12346",
+        "name": "Modern Office Chair - White",
+        "variantType": "STANDARD",
+        "optionValues": [
+          {
+            "categoryName": "color",
+            "value": "White",
+            "displayName": "White",
+            "rank": 2
+          }
+        ],
+        "leadImageUrl": "https://cdn.example.com/thumb-white.jpg",
+        "statusSummary": "LIVE"
+      },
+      {
+        "mplvid": "MPLV-12347",
+        "name": "Modern Office Chair - Gray",
+        "variantType": "STANDARD",
+        "optionValues": [
+          {
+            "categoryName": "color",
+            "value": "Gray",
+            "displayName": "Gray",
+            "rank": 3
+          }
+        ],
+        "leadImageUrl": "https://cdn.example.com/thumb-gray.jpg",
+        "statusSummary": "PROCESSING"
+      }
+    ],
+    "groupingMetadata": {
+      "suggestedBySupplier": true,
+      "wayfairModified": false,
+      "lastModifiedAt": "2025-11-08T14:00:00Z"
+    }
+  },
+  {
+    "variantGroupId": "VG-2001",
+    "mplid": "MPL-200",
+    "marketContext": "US",
+    "optionCategories": [
+      {
+        "categoryName": "finish",
+        "displayName": "Finish",
+        "rank": 1,
+        "description": "Desk finish options",
+        "isCustomCategory": false,
+        "moderationStatus": "APPROVED"
+      }
+    ],
+    "variants": [
+      {
+        "mplvid": "MPLV-54321",
+        "name": "Standing Desk - Walnut",
+        "variantType": "STANDARD",
+        "optionValues": [
+          {
+            "categoryName": "finish",
+            "value": "Walnut",
+            "displayName": "Walnut",
+            "rank": 1
+          }
+        ],
+        "leadImageUrl": "https://cdn.example.com/thumb-walnut.jpg",
+        "statusSummary": "BLOCKED"
+      }
+    ],
+    "groupingMetadata": {
+      "suggestedBySupplier": true,
+      "wayfairModified": true,
+      "lastModifiedAt": "2025-11-09T09:30:00Z"
+    }
+  }
+]
