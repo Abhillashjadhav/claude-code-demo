@@ -1,0 +1,21 @@
+ticker,name,pe,ps,sentiment
+AAPL,Apple Inc.,29.5,7.8,75
+MSFT,Microsoft Corporation,35.2,12.4,82
+GOOGL,Alphabet Inc.,24.8,5.6,78
+NVDA,NVIDIA Corporation,48.3,18.9,88
+META,Meta Platforms Inc.,26.4,6.2,71
+AMZN,Amazon.com Inc.,42.1,2.8,80
+TSLA,Tesla Inc.,65.7,8.4,68
+NFLX,Netflix Inc.,38.9,5.1,73
+ADBE,Adobe Inc.,43.2,11.3,76
+CRM,Salesforce Inc.,32.6,5.9,74
+INTC,Intel Corporation,18.3,2.4,52
+AMD,Advanced Micro Devices Inc.,41.7,9.8,79
+CSCO,Cisco Systems Inc.,17.2,3.6,65
+ORCL,Oracle Corporation,28.4,5.8,70
+AVGO,Broadcom Inc.,31.8,10.2,77
+QCOM,QUALCOMM Incorporated,22.5,4.7,72
+TXN,Texas Instruments Inc.,20.1,6.3,68
+PYPL,PayPal Holdings Inc.,15.8,2.1,58
+SNOW,Snowflake Inc.,N/A,14.6,81
+ZM,Zoom Video Communications Inc.,24.3,3.9,62
