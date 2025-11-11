@@ -31,10 +31,10 @@ pip install -U pip flask pytest
 
 ```bash
 export FLASK_APP=src/app.py
-flask run --host=127.0.0.1 --port=8000
+flask run --host=127.0.0.1 --port=8001
 ```
 
-The server will start at `http://127.0.0.1:8000`
+The server will start at `http://127.0.0.1:8001`
 
 ### 4. Run tests
 
@@ -47,7 +47,7 @@ pytest -q
 ### Health Check
 
 ```bash
-curl -s http://127.0.0.1:8000/health
+curl -s http://127.0.0.1:8001/health
 ```
 
 **Response:**
@@ -62,7 +62,7 @@ curl -s http://127.0.0.1:8000/health
 Retrieve a product by MPLVID (MarketplaceListingVariantID).
 
 ```bash
-curl -s "http://127.0.0.1:8000/v2/product?mplvid=MPLV-12345&market=US"
+curl -s "http://127.0.0.1:8001/v2/product?mplvid=MPLV-12345&market=US"
 ```
 
 **Query Parameters:**
@@ -79,12 +79,12 @@ curl -s "http://127.0.0.1:8000/v2/product?mplvid=MPLV-12345&market=US"
 
 **Example - Product with Barriers:**
 ```bash
-curl -s "http://127.0.0.1:8000/v2/product?mplvid=MPLV-54321"
+curl -s "http://127.0.0.1:8001/v2/product?mplvid=MPLV-54321"
 ```
 
 **Example - Composite Product:**
 ```bash
-curl -s "http://127.0.0.1:8000/v2/product?mplvid=MPLV-99999"
+curl -s "http://127.0.0.1:8001/v2/product?mplvid=MPLV-99999"
 ```
 
 ### Get Variant Group
@@ -92,7 +92,7 @@ curl -s "http://127.0.0.1:8000/v2/product?mplvid=MPLV-99999"
 Retrieve all variants in a variant group.
 
 ```bash
-curl -s "http://127.0.0.1:8000/v2/group?variantGroupId=VG-1001&market=US"
+curl -s "http://127.0.0.1:8001/v2/group?variantGroupId=VG-1001&market=US"
 ```
 
 **Query Parameters:**
@@ -110,7 +110,7 @@ curl -s "http://127.0.0.1:8000/v2/group?variantGroupId=VG-1001&market=US"
 List and filter products across the catalog.
 
 ```bash
-curl -s "http://127.0.0.1:8000/v2/products?market=US&hasBarriers=true"
+curl -s "http://127.0.0.1:8001/v2/products?market=US&hasBarriers=true"
 ```
 
 **Query Parameters (all optional):**
@@ -122,17 +122,17 @@ curl -s "http://127.0.0.1:8000/v2/products?market=US&hasBarriers=true"
 
 **Example - Find products updated recently:**
 ```bash
-curl -s "http://127.0.0.1:8000/v2/products?lastUpdatedAfter=2025-11-01T00:00:00Z"
+curl -s "http://127.0.0.1:8001/v2/products?lastUpdatedAfter=2025-11-01T00:00:00Z"
 ```
 
 **Example - Find composite products:**
 ```bash
-curl -s "http://127.0.0.1:8000/v2/products?productType=COMPOSITE"
+curl -s "http://127.0.0.1:8001/v2/products?productType=COMPOSITE"
 ```
 
 **Example - Find products with barriers in US market:**
 ```bash
-curl -s "http://127.0.0.1:8000/v2/products?market=US&hasBarriers=true"
+curl -s "http://127.0.0.1:8001/v2/products?market=US&hasBarriers=true"
 ```
 
 ## Sample Data
@@ -222,5 +222,5 @@ For questions about the PRD or requirements, see:
 For issues with this demo:
 - Check that data files exist in `/data`
 - Verify virtual environment is activated
-- Ensure Flask is running on port 8000
+- Ensure Flask is running on port 8001
 - Review test output for detailed error messages
