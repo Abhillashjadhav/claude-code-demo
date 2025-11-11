@@ -1,8 +1,8 @@
 """Read API 2.0 MVP Demo - Flask application."""
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from src.data import get_store
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../templates')
 
 
 def parse_bool(value):
@@ -12,6 +12,12 @@ def parse_bool(value):
     if isinstance(value, bool):
         return value
     return value.lower() in ('true', '1', 'yes')
+
+
+@app.route('/', methods=['GET'])
+def index():
+    """Serve the interactive dashboard UI."""
+    return render_template('index.html')
 
 
 @app.route('/health', methods=['GET'])
