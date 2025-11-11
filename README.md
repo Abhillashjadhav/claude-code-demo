@@ -6,11 +6,17 @@ This is a **requirements validation harness** and **product demo** for the Catal
 
 **Note:** This demo validates *read* behaviors only and mirrors GraphQL intents via REST endpoints. Actual schema, federation, authentication, SLAs, and ID Mapper integration are explicitly out-of-scope for this demo.
 
-## PRD Index
+## 📚 Documentation
 
-For complete requirements and specifications, see:
+- **[Stakeholder Demo Guide](DEMO_GUIDE.md)** ⭐ - How to demo, interpret results, and validate accuracy
 - [PRD Index](docs/prds/README.md)
 - [Catalog Read API 2.0 PRD](docs/prds/2025-11-catalog-read-api-2.0.md)
+
+## 🚀 Live Demo
+
+**Public URL:** https://catalog-read-api-demo.onrender.com/
+
+See the [Demo Guide](DEMO_GUIDE.md) for how to use it and validate results.
 
 ## Quick Start
 
