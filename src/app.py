@@ -150,6 +150,145 @@ def list_products():
         }), 400
 
 
+@app.route('/v2/product/<mplvid>/status', methods=['PUT'])
+def update_product_status(mplvid):
+    """
+    Update product status (for demo purposes).
+
+    Body params:
+        status (required): New status (LIVE, BLOCKED, PROCESSING)
+
+    Returns:
+        200: Success message
+        400: Invalid parameters
+        404: Product not found
+    """
+    data = request.json or {}
+    new_status = data.get('status')
+
+    if not new_status:
+        return jsonify({
+            "error": "Missing required parameter 'status'",
+            "code": "MISSING_PARAMETER"
+        }), 400
+
+    if new_status not in ['LIVE', 'BLOCKED', 'PROCESSING']:
+        return jsonify({
+            "error": f"Invalid status: {new_status}. Must be LIVE, BLOCKED, or PROCESSING",
+            "code": "INVALID_PARAMETER"
+        }), 400
+
+    store = get_store()
+    success = store.update_product_status(mplvid, new_status)
+
+    if not success:
+        return jsonify({
+            "error": f"Product not found: {mplvid}",
+            "code": "NOT_FOUND"
+        }), 404
+
+    return jsonify({
+        "message": f"Product {mplvid} status updated to {new_status}",
+        "mplvid": mplvid,
+        "status": new_status
+    }), 200
+
+
+@app.route('/v2/product/<mplvid>/barriers', methods=['POST'])
+def add_barrier(mplvid):
+    """
+    Add a barrier to a product (for demo purposes).
+
+    Body params:
+        code (required): Barrier code
+        message (required): Error message
+        fieldPath (optional): Field causing the barrier
+        severity (optional): ERROR or WARNING
+
+    Returns:
+        200: Success message
+        400: Invalid parameters
+        404: Product not found
+    """
+    data = request.json or {}
+
+    code = data.get('code')
+    message = data.get('message')
+
+    if not code or not message:
+        return jsonify({
+            "error": "Missing required parameters 'code' and 'message'",
+            "code": "MISSING_PARAMETER"
+        }), 400
+
+    barrier = {
+        "code": code,
+        "message": message,
+        "fieldPath": data.get('fieldPath', ''),
+        "severity": data.get('severity', 'ERROR'),
+        "actionableSteps": data.get('actionableSteps', []),
+        "remediationUrl": data.get('remediationUrl', ''),
+        "addedBy": "Demo User"
+    }
+
+    store = get_store()
+    success = store.add_barrier(mplvid, barrier)
+
+    if not success:
+        return jsonify({
+            "error": f"Product not found: {mplvid}",
+            "code": "NOT_FOUND"
+        }), 404
+
+    return jsonify({
+        "message": f"Barrier added to product {mplvid}",
+        "mplvid": mplvid,
+        "barrier": barrier
+    }), 200
+
+
+@app.route('/v2/product/<mplvid>/barriers', methods=['DELETE'])
+def remove_barriers(mplvid):
+    """
+    Remove all barriers from a product (for demo purposes).
+
+    Returns:
+        200: Success message
+        404: Product not found
+    """
+    store = get_store()
+    success = store.remove_all_barriers(mplvid)
+
+    if not success:
+        return jsonify({
+            "error": f"Product not found: {mplvid}",
+            "code": "NOT_FOUND"
+        }), 404
+
+    return jsonify({
+        "message": f"All barriers removed from product {mplvid}",
+        "mplvid": mplvid
+    }), 200
+
+
+@app.route('/v2/reset', methods=['POST'])
+def reset_data():
+    """
+    Reset all data to original state (for demo purposes).
+
+    Returns:
+        200: Success message
+    """
+    store = get_store()
+    store.reset_data()
+
+    return jsonify({
+        "message": "Data reset to original state",
+        "products": len(store.products),
+        "groups": len(store.groups)
+    }), 200
+
+
 @app.errorhandler(404)
 def not_found(e):
     """Handle 404 errors."""

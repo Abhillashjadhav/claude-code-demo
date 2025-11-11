@@ -270,6 +270,7 @@
             <button class="tab" onclick="switchTab('product')">Get Product</button>
             <button class="tab" onclick="switchTab('group')">Variant Group</button>
             <button class="tab" onclick="switchTab('list')">List Products</button>
+            <button class="tab" onclick="switchTab('explorer')">API Explorer</button>
             <button class="tab" onclick="switchTab('examples')">Quick Examples</button>
         </div>
 
@@ -434,6 +435,89 @@
                 </div>
 
                 <div id="listResult"></div>
+            </div>
+
+            <div id="explorer" class="tab-content">
+                <h2 style="margin-bottom: 20px; color: #333;">API Explorer</h2>
+                <p style="margin-bottom: 20px; color: #666;">Test API endpoints with custom parameters. Try any combination to see how the API responds.</p>
+
+                <div class="input-group">
+                    <label>Endpoint</label>
+                    <select id="explorerEndpoint" onchange="updateExplorerParams()">
+                        <option value="/v2/product">GET /v2/product - Get Single Product</option>
+                        <option value="/v2/group">GET /v2/group - Get Variant Group</option>
+                        <option value="/v2/products">GET /v2/products - List Products</option>
+                    </select>
+                </div>
+
+                <div id="explorerParams" style="margin-top: 20px;">
+                    <!-- Dynamic parameter fields will be inserted here -->
+                </div>
+
+                <button class="btn" onclick="sendExplorerRequest()" style="margin-top: 20px;">Send Request</button>
+
+                <div style="margin-top: 20px; padding: 15px; background: #f9fafb; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <h3 style="margin-bottom: 10px; color: #333; font-size: 14px;">cURL Command:</h3>
+                    <pre id="curlCommand" style="overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; font-size: 12px; background: #fff; padding: 10px; border-radius: 4px;">Select parameters and click "Send Request" to generate</pre>
+                </div>
+
+                <div id="explorerResult"></div>
+
+                <div style="margin-top: 40px; padding: 20px; background: #fef3c7; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                    <h3 style="margin-bottom: 15px; color: #92400e; font-size: 18px;">🧪 Test Scenarios (Modify & Re-Read)</h3>
+                    <p style="margin-bottom: 15px; color: #78350f; font-size: 14px;">Modify product data and query again to see how READ API reflects changes. Data resets on page refresh.</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                        <div style="background: white; padding: 15px; border-radius: 8px;">
+                            <h4 style="margin-bottom: 10px; color: #333; font-size: 14px; font-weight: 600;">Change Product Status</h4>
+                            <div class="input-group" style="margin-bottom: 10px;">
+                                <label style="font-size: 13px;">MPLVID</label>
+                                <input type="text" id="scenario_mplvid_status" placeholder="e.g., MPLV-12345" value="MPLV-12345" style="padding: 8px; font-size: 13px;">
+                            </div>
+                            <div class="input-group" style="margin-bottom: 10px;">
+                                <label style="font-size: 13px;">New Status</label>
+                                <select id="scenario_status" style="padding: 8px; font-size: 13px;">
+                                    <option value="LIVE">LIVE</option>
+                                    <option value="BLOCKED">BLOCKED</option>
+                                    <option value="PROCESSING">PROCESSING</option>
+                                </select>
+                            </div>
+                            <button class="btn" onclick="changeProductStatus()" style="padding: 8px 16px; font-size: 13px;">Update Status</button>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px;">
+                            <h4 style="margin-bottom: 10px; color: #333; font-size: 14px; font-weight: 600;">Add Barrier</h4>
+                            <div class="input-group" style="margin-bottom: 10px;">
+                                <label style="font-size: 13px;">MPLVID</label>
+                                <input type="text" id="scenario_mplvid_barrier" placeholder="e.g., MPLV-12345" value="MPLV-12345" style="padding: 8px; font-size: 13px;">
+                            </div>
+                            <div class="input-group" style="margin-bottom: 10px;">
+                                <label style="font-size: 13px;">Barrier Code</label>
+                                <input type="text" id="scenario_barrier_code" placeholder="e.g., DEMO_BARRIER" value="DEMO_BARRIER" style="padding: 8px; font-size: 13px;">
+                            </div>
+                            <div class="input-group" style="margin-bottom: 10px;">
+                                <label style="font-size: 13px;">Message</label>
+                                <input type="text" id="scenario_barrier_message" placeholder="Test barrier message" value="This is a demo barrier" style="padding: 8px; font-size: 13px;">
+                            </div>
+                            <button class="btn" onclick="addBarrierToProduct()" style="padding: 8px 16px; font-size: 13px;">Add Barrier</button>
+                        </div>
+
+                        <div style="background: white; padding: 15px; border-radius: 8px;">
+                            <h4 style="margin-bottom: 10px; color: #333; font-size: 14px; font-weight: 600;">Remove Barriers</h4>
+                            <div class="input-group" style="margin-bottom: 10px;">
+                                <label style="font-size: 13px;">MPLVID</label>
+                                <input type="text" id="scenario_mplvid_remove" placeholder="e.g., MPLV-54321" value="MPLV-54321" style="padding: 8px; font-size: 13px;">
+                            </div>
+                            <button class="btn" onclick="removeBarriersFromProduct()" style="padding: 8px 16px; font-size: 13px; margin-top: 15px;">Remove All Barriers</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; text-align: center;">
+                        <button class="btn" onclick="resetAllData()" style="background: #ef4444; padding: 10px 20px;">🔄 Reset All Data</button>
+                    </div>
+
+                    <div id="scenarioResult" style="margin-top: 15px;"></div>
+                </div>
             </div>
 
             <div id="examples" class="tab-content">
@@ -614,6 +698,223 @@
                     switchTab('list');
                     setTimeout(() => loadListExample('barriers'), 100);
                     break;
+            }
+        }
+
+        // API Explorer functions
+        function updateExplorerParams() {
+            const endpoint = document.getElementById('explorerEndpoint').value;
+            const paramsDiv = document.getElementById('explorerParams');
+
+            let html = '';
+
+            if (endpoint === '/v2/product') {
+                html = `
+                    <div class="input-group">
+                        <label>mplvid (required)</label>
+                        <input type="text" id="explorer_mplvid" placeholder="e.g., MPLV-12345" value="MPLV-12345">
+                    </div>
+                    <div class="input-group">
+                        <label>market (optional)</label>
+                        <select id="explorer_market">
+                            <option value="">-- None --</option>
+                            <option value="US">US</option>
+                            <option value="CA">CA</option>
+                        </select>
+                    </div>
+                `;
+            } else if (endpoint === '/v2/group') {
+                html = `
+                    <div class="input-group">
+                        <label>variantGroupId (required)</label>
+                        <input type="text" id="explorer_variantGroupId" placeholder="e.g., VG-1001" value="VG-1001">
+                    </div>
+                    <div class="input-group">
+                        <label>market (optional)</label>
+                        <select id="explorer_market">
+                            <option value="">-- None --</option>
+                            <option value="US">US</option>
+                            <option value="CA">CA</option>
+                        </select>
+                    </div>
+                `;
+            } else if (endpoint === '/v2/products') {
+                html = `
+                    <div class="input-group">
+                        <label>market (optional)</label>
+                        <select id="explorer_market">
+                            <option value="">-- All --</option>
+                            <option value="US">US</option>
+                            <option value="CA">CA</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>productType (optional)</label>
+                        <select id="explorer_productType">
+                            <option value="">-- All --</option>
+                            <option value="SIMPLE">SIMPLE</option>
+                            <option value="COMPOSITE">COMPOSITE</option>
+                            <option value="KIT">KIT</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>hasBarriers (optional)</label>
+                        <select id="explorer_hasBarriers">
+                            <option value="">-- All --</option>
+                            <option value="true">true</option>
+                            <option value="false">false</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>classId (optional)</label>
+                        <input type="text" id="explorer_classId" placeholder="e.g., CLS-500">
+                    </div>
+                    <div class="input-group">
+                        <label>lastUpdatedAfter (optional)</label>
+                        <input type="text" id="explorer_lastUpdatedAfter" placeholder="e.g., 2025-11-01T00:00:00Z">
+                    </div>
+                `;
+            }
+
+            paramsDiv.innerHTML = html;
+        }
+
+        async function sendExplorerRequest() {
+            const endpoint = document.getElementById('explorerEndpoint').value;
+            let url = endpoint + '?';
+            const params = [];
+
+            // Collect parameters
+            const paramInputs = document.querySelectorAll('#explorerParams input, #explorerParams select');
+            paramInputs.forEach(input => {
+                if (input.value && input.value !== '') {
+                    const paramName = input.id.replace('explorer_', '');
+                    params.push(`${paramName}=${encodeURIComponent(input.value)}`);
+                }
+            });
+
+            url += params.join('&');
+
+            // Generate curl command
+            const curlCmd = `curl -s "${window.location.origin}${url}"`;
+            document.getElementById('curlCommand').textContent = curlCmd;
+
+            // Make request
+            await fetchAndDisplay(url, 'explorerResult');
+        }
+
+        // Initialize explorer params on load
+        window.addEventListener('DOMContentLoaded', () => {
+            updateExplorerParams();
+        });
+
+        // Test Scenario functions
+        async function changeProductStatus() {
+            const mplvid = document.getElementById('scenario_mplvid_status').value;
+            const status = document.getElementById('scenario_status').value;
+
+            if (!mplvid) {
+                showResult('scenarioResult', 'Please enter an MPLVID', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`/v2/product/${mplvid}/status`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({status: status})
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showResult('scenarioResult', `✅ Success! ${data.message}\\n\\nNow query GET /v2/product?mplvid=${mplvid} to see the change.`, false);
+                } else {
+                    showResult('scenarioResult', JSON.stringify(data, null, 2), true);
+                }
+            } catch (error) {
+                showResult('scenarioResult', `Error: ${error.message}`, true);
+            }
+        }
+
+        async function addBarrierToProduct() {
+            const mplvid = document.getElementById('scenario_mplvid_barrier').value;
+            const code = document.getElementById('scenario_barrier_code').value;
+            const message = document.getElementById('scenario_barrier_message').value;
+
+            if (!mplvid || !code || !message) {
+                showResult('scenarioResult', 'Please fill all fields', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`/v2/product/${mplvid}/barriers`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        code: code,
+                        message: message,
+                        fieldPath: 'demo.field',
+                        severity: 'ERROR'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showResult('scenarioResult', `✅ Success! ${data.message}\\n\\nNow query GET /v2/product?mplvid=${mplvid} to see the barrier in statusDetails.`, false);
+                } else {
+                    showResult('scenarioResult', JSON.stringify(data, null, 2), true);
+                }
+            } catch (error) {
+                showResult('scenarioResult', `Error: ${error.message}`, true);
+            }
+        }
+
+        async function removeBarriersFromProduct() {
+            const mplvid = document.getElementById('scenario_mplvid_remove').value;
+
+            if (!mplvid) {
+                showResult('scenarioResult', 'Please enter an MPLVID', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`/v2/product/${mplvid}/barriers`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showResult('scenarioResult', `✅ Success! ${data.message}\\n\\nNow query GET /v2/product?mplvid=${mplvid} to see barriers removed.`, false);
+                } else {
+                    showResult('scenarioResult', JSON.stringify(data, null, 2), true);
+                }
+            } catch (error) {
+                showResult('scenarioResult', `Error: ${error.message}`, true);
+            }
+        }
+
+        async function resetAllData() {
+            if (!confirm('Reset all data to original state? This will undo all changes.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/v2/reset', {
+                    method: 'POST'
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showResult('scenarioResult', `✅ ${data.message}\\nProducts: ${data.products}, Groups: ${data.groups}`, false);
+                } else {
+                    showResult('scenarioResult', JSON.stringify(data, null, 2), true);
+                }
+            } catch (error) {
+                showResult('scenarioResult', `Error: ${error.message}`, true);
             }
         }
     </script>

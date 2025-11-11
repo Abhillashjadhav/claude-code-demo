@@ -129,6 +129,75 @@ class DataStore:
 
         return results
 
+    def update_product_status(self, mplvid: str, new_status: str) -> bool:
+        """
+        Update product status (for demo purposes).
+
+        Args:
+            mplvid: Product identifier
+            new_status: New status (LIVE, BLOCKED, PROCESSING)
+
+        Returns:
+            True if updated, False if product not found
+        """
+        for product in self.products:
+            if product.get("mplvid") == mplvid:
+                product["statusSummary"] = new_status
+                # Update pipeline status to match
+                if new_status == "LIVE":
+                    product["pipelineStatus"]["overallStatus"] = "COMPLETED"
+                elif new_status == "BLOCKED":
+                    product["pipelineStatus"]["overallStatus"] = "BLOCKED"
+                elif new_status == "PROCESSING":
+                    product["pipelineStatus"]["overallStatus"] = "PROCESSING"
+                return True
+        return False
+
+    def add_barrier(self, mplvid: str, barrier: Dict) -> bool:
+        """
+        Add a barrier to a product (for demo purposes).
+
+        Args:
+            mplvid: Product identifier
+            barrier: Barrier object with code, message, fieldPath, severity
+
+        Returns:
+            True if added, False if product not found
+        """
+        for product in self.products:
+            if product.get("mplvid") == mplvid:
+                if "statusDetails" not in product:
+                    product["statusDetails"] = {"barrierReasons": [], "validationErrors": []}
+                if "barrierReasons" not in product["statusDetails"]:
+                    product["statusDetails"]["barrierReasons"] = []
+                product["statusDetails"]["barrierReasons"].append(barrier)
+                # Auto-set status to BLOCKED
+                product["statusSummary"] = "BLOCKED"
+                product["pipelineStatus"]["overallStatus"] = "BLOCKED"
+                return True
+        return False
+
+    def remove_all_barriers(self, mplvid: str) -> bool:
+        """
+        Remove all barriers from a product (for demo purposes).
+
+        Args:
+            mplvid: Product identifier
+
+        Returns:
+            True if removed, False if product not found
+        """
+        for product in self.products:
+            if product.get("mplvid") == mplvid:
+                if "statusDetails" in product:
+                    product["statusDetails"]["barrierReasons"] = []
+                return True
+        return False
+
+    def reset_data(self):
+        """Reload original data from files."""
+        self._load_data()
+
 
 # Global data store instance
 _store = None
