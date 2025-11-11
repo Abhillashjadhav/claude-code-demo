@@ -201,6 +201,60 @@ pytest tests/test_app.py::test_get_product_success
 
 Edit `data/products.json` or `data/groups.json` to add more sample products or variant groups. The server will automatically load the updated data on restart.
 
+## Deploy to Production (Free Tier)
+
+This demo can be deployed to a public URL for stakeholder testing using free tier services.
+
+### Option 1: Deploy to Render.com (Recommended)
+
+1. **Sign up for Render.com** (free tier available)
+   - Go to https://render.com and sign up
+
+2. **Connect your GitHub repository**
+   - In Render dashboard, click "New +" → "Web Service"
+   - Connect your GitHub account
+   - Select the `claude-code-demo` repository
+
+3. **Configure the deployment**
+   - Render will auto-detect the `render.yaml` configuration
+   - Or manually configure:
+     - **Build Command:** `pip install -r requirements.txt`
+     - **Start Command:** `cd src && PYTHONPATH=/opt/render/project gunicorn app:app --bind 0.0.0.0:$PORT`
+     - **Environment Variables:** `FLASK_ENV=production`
+
+4. **Deploy**
+   - Click "Create Web Service"
+   - Render will build and deploy your app
+   - You'll get a public URL like: `https://catalog-read-api-demo.onrender.com`
+
+5. **Share the URL**
+   - The dashboard will be at: `https://your-app.onrender.com/`
+   - The API will be at: `https://your-app.onrender.com/v2/product?mplvid=MPLV-12345`
+
+**Note:** Free tier apps on Render spin down after inactivity and may take 30-60 seconds to wake up on first request.
+
+### Option 2: Deploy to Railway.app
+
+1. Go to https://railway.app and sign up
+2. Click "New Project" → "Deploy from GitHub repo"
+3. Select your repository
+4. Railway will auto-detect Python and deploy
+5. Add environment variable: `FLASK_ENV=production`
+
+### Option 3: Deploy to Fly.io
+
+```bash
+# Install flyctl
+curl -L https://fly.io/install.sh | sh
+
+# Login and launch
+fly auth login
+fly launch
+
+# Deploy
+fly deploy
+```
+
 ## Production Considerations
 
 This demo is for **requirements validation** and **internal product review only**. For production deployment, the following must be implemented:

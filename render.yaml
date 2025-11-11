@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: catalog-read-api-demo
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "cd /opt/render/project/src && PYTHONPATH=/opt/render/project gunicorn app:app --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: "1"
